@@ -27,17 +27,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # While this package targets .Net Framework 4.6.2, the dotnet 5 stuff will work.
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 5.0.x
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1
 
-    - name: Install dependencies
-      run: dotnet restore Elements.Quantity
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore
 
     - name: Build
-      run: dotnet build Elements.Quantity --configuration Release --no-restore
+      run: msbuild /p:Configuration=Release
+
+    # While this package targets .Net Framework 4.6.2, the dotnet 5 stuff will work.
+    # - name: Setup .NET 5
+    #   uses: actions/setup-dotnet@v3
+    #   with:
+    #     dotnet-version: 5.0.x
+
+    # - name: Install dependencies
+    #   run: dotnet restore Elements.Quantity
+
+    # - name: Build
+    #   run: dotnet build Elements.Quantity --configuration Release --no-restore
 
     - name: Integration Tests
       run: dotnet test Testing --configuration Release --no-restore
