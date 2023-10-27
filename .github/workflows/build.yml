@@ -22,13 +22,13 @@ permissions:
 
 jobs:
   build:
-    # 2019 has our .NET needs, and is the fastest.
+    # 2019 has our needs, and is the fastest.
     runs-on: windows-2019
 
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: build-${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -42,22 +42,6 @@ jobs:
       run: |
         dotnet build Elements.Quantity --no-restore
 
-  testing:
-    runs-on: windows-2019
-
-    # Cancels previous runs if they're still in progress.
-    # It's unlikely with how short this workflow is, but it's good to have.
-    concurrency:
-      group: testing-${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        dotnet restore Testing --no-dependencies
-
     - name: Test
       run: |
-        dotnet test Testing --verbosity normal --no-restore
+        dotnet test Testing --no-restore
