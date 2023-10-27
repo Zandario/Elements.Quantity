@@ -32,7 +32,7 @@ jobs:
       run: dotnet restore --no-cache --verbosity normal
 
     - name: Build
-      run: dotnet build --configuration Release --verbosity normal --no-restore
+      run: dotnet build --configuration Release --no-restore
 
     - name: Test
       run: dotnet test Testing --configuration Release --verbosity normal --no-restore
