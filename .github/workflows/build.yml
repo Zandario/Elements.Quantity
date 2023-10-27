@@ -27,7 +27,7 @@ jobs:
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.project }}
       cancel-in-progress: true
 
     steps:
