@@ -41,10 +41,10 @@ jobs:
     - name: Test
       run: dotnet test Testing --configuration Release --verbosity normal
 
-  build-2020:
+  build-2022:
     # 2019, has our .NET needs, latest does not
     # Comes with dotnet.
-    runs-on: windows-2020
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v4
