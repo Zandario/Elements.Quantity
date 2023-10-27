@@ -19,34 +19,28 @@ env:
 
 jobs:
   build:
-    name: Build with Dotnet ${{ matrix.dotnet }}
-
     # 2019 has our needs, and is the fastest.
     runs-on: windows-2019
 
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.dotnet }}
+      group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-
-    strategy:
-      matrix:
-        dotnet: [ '4.6.2', '4.6.x', '4.x' ]
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup .NET ${{ matrix.dotnet }}
+    - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ matrix.dotnet }}
+        dotnet-version: 7.0.x
 
     - name: Install dependencies
-      run: dotnet restore Elements.Quantity
+      run: dotnet restore Elements.Quantity -f net461
 
     - name: Build
-      run: dotnet build Elements.Quantity --no-restore
+      run: dotnet build Elements.Quantity --no-restore -f net461
 
     - name: Test
-      run: dotnet test Testing
+      run: dotnet test Testing -f net461
