@@ -15,9 +15,9 @@ on:
 
 jobs:
   build:
-    # 2019, has our .NET needs, latest does not
+    # 2019 has our .NET needs, and is the fastest.
     # Comes with dotnet.
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
