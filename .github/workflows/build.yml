@@ -32,11 +32,12 @@ jobs:
     #   run: |
     #     dotnet restore Elements.Quantity
     #     dotnet restore Testing
-    # It is faster to call dotnet build on the individual projects than to call dotnet build on the root.
-    # - name: Build
-    #   run: |
-    #     dotnet build Elements.Quantity --configuration Release --no-restore
-    #     dotnet build Testing --configuration Release --no-restore
+
+    # Not needed until/if we use NuGet packages.
+    - name: Install dependencies
+      run: |
+        dotnet restore Elements.Quantity
+        dotnet restore Testing
 
     - name: Build
       run: |
