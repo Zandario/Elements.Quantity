@@ -25,16 +25,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    # - name: Install dependencies
-    #   run: |
-    #     dotnet restore Elements.Quantity
-    #     dotnet restore Testing
-    # - name: Build
-    #   run: |
-    #     dotnet build Elements.Quantity --configuration Release --no-dependencies
-    #     dotnet build Testing --configuration Release --no-dependencies
+    - name: Install dependencies
+      run: |
+        dotnet restore Elements.Quantity
+        dotnet restore Testing
+    # It is faster to call dotnet build on the projects than to call dotnet build on the solution.
     - name: Build
       run: |
-        dotnet build --configuration Release --no-dependencies
+        dotnet build Elements.Quantity --configuration Release
+        dotnet build Testing --configuration Release
     - name: Test
       run: dotnet test Testing -c Release --verbosity normal
