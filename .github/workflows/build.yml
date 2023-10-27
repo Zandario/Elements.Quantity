@@ -15,8 +15,14 @@ on:
 
 jobs:
   build:
+    # Cancels previous runs if they're still in progress.
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     # 2019, has our .NET needs, latest does not
     runs-on: windows-2019
+
     steps:
     - uses: actions/checkout@v4
     # While this package targets .Net Framework 4.6.2, the dotnet 7 stuff will work.
