@@ -1,5 +1,5 @@
 name: Build Library
-
+run-name: "${{ github.action }}: ${{ github.ref_name }}"
 on:
   push:
     # paths-ignore:
@@ -13,10 +13,16 @@ on:
     #   - '**/*.md'
   workflow_dispatch:
 
+env:
+  # Configuration type to build.
+  BUILD_CONFIGURATION: Release
+
+permissions:
+  contents: read
+
 jobs:
   build:
     # 2019 has our .NET needs, and is the fastest.
-    # Comes with dotnet.
     runs-on: windows-2019
 
     strategy:
@@ -39,8 +45,25 @@ jobs:
 
     - name: Build
       run: |
-        dotnet build ${{ matrix.project }} --configuration Release --no-restore
+        dotnet build ${{ matrix.project }} --no-restore
+
+  testing:
+    # Why test if we don't build?
+    needs: build
+    runs-on: windows-2019
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [Elements.Quantity, Testing]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        dotnet restore ${{ matrix.project }} --no-dependencies
 
     - name: Test
       run: |
-        dotnet test ${{ matrix.project }} --configuration Release --verbosity normal --no-restore
+        dotnet test ${{ matrix.project }} --verbosity normal --no-restore
