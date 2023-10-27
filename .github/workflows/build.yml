@@ -28,7 +28,7 @@ jobs:
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
+      group: build-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -48,7 +48,7 @@ jobs:
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
+      group: testing-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
