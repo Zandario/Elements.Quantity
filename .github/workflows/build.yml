@@ -1,5 +1,5 @@
 name: Build Library
-run-name: "${{ github.event_name }}: ${{ github.workflow }} ${{ github.ref_name }} | Attempt ${{ github.run_attempt }}"
+run-name: "${{ github.event.head_commit.message }}: ${{ github.workflow }} ${{ github.ref_name }} | ${{ github.run_attempt == 1 && '' || format('Attempt #{0}', github.run_attempt) }}"
 on:
   push:
     # paths-ignore:
