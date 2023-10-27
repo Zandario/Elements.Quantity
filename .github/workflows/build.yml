@@ -31,7 +31,7 @@ jobs:
     #     dotnet restore Testing
     - name: Build
       run: |
-        dotnet build Elements.Quantity --configuration Release
-        dotnet build Testing --configuration Release
+        dotnet build Elements.Quantity --configuration Release --no-dependencies
+        dotnet build Testing --configuration Release --no-dependencies
     - name: Test
       run: dotnet test Testing -c Release --verbosity normal
