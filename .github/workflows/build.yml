@@ -15,14 +15,15 @@ on:
 
 jobs:
   build:
+    # 2019, has our .NET needs, latest does not
+    # Comes with dotnet.
+    runs-on: windows-2019
+
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-
-    # 2019, has our .NET needs, latest does not
-    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v4
@@ -31,10 +32,38 @@ jobs:
     #   run: |
     #     dotnet restore Elements.Quantity
     #     dotnet restore Testing
-    # It is faster to call dotnet build on the projects than to call dotnet build on the solution.
+    # It is faster to call dotnet build on the individual projects than to call dotnet build on the root.
     - name: Build
       run: |
         dotnet build Elements.Quantity --configuration Release
         dotnet build Testing --configuration Release
+
     - name: Test
-      run: dotnet test Testing -c Release --verbosity normal
+      run: dotnet test Testing --configuration Release --verbosity normal
+
+  build-2020:
+    # 2019, has our .NET needs, latest does not
+    # Comes with dotnet.
+    runs-on: windows-2020
+
+    # Cancels previous runs if they're still in progress.
+    # It's unlikely with how short this workflow is, but it's good to have.
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+    - uses: actions/checkout@v4
+    # Not needed until we use NuGet packages.
+    # - name: Install dependencies
+    #   run: |
+    #     dotnet restore Elements.Quantity
+    #     dotnet restore Testing
+    # It is faster to call dotnet build on the individual projects than to call dotnet build on the root.
+    - name: Build
+      run: |
+        dotnet build Elements.Quantity --configuration Release
+        dotnet build Testing --configuration Release
+
+    - name: Test
+      run: dotnet test Testing --configuration Release --verbosity normal
