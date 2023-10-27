@@ -16,6 +16,7 @@ on:
 jobs:
   build:
     # Cancels previous runs if they're still in progress.
+    # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -25,10 +26,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: |
-        dotnet restore Elements.Quantity
-        dotnet restore Testing
+    # Not needed until we use NuGet packages.
+    # - name: Install dependencies
+    #   run: |
+    #     dotnet restore Elements.Quantity
+    #     dotnet restore Testing
     # It is faster to call dotnet build on the projects than to call dotnet build on the solution.
     - name: Build
       run: |
