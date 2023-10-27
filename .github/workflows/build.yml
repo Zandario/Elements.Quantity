@@ -25,13 +25,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: |
-        dotnet restore Elements.Quantity
-        dotnet restore Testing
+    # - name: Install dependencies
+    #   run: |
+    #     dotnet restore Elements.Quantity
+    #     dotnet restore Testing
     - name: Build
       run: |
-        dotnet build Elements.Quantity --configuration Release --no-restore
-        dotnet build Testing --configuration Release --no-restore
+        dotnet build Elements.Quantity --configuration Release
+        dotnet build Testing --configuration Release
     - name: Test
       run: dotnet test Testing -c Release --verbosity normal
