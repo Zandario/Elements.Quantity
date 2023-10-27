@@ -13,10 +13,6 @@ on:
     #   - '**/*.md'
   workflow_dispatch:
 
-env:
-  # Configuration type to build.
-  DOTNET_VERSION: net462
-
 jobs:
   build:
     # 2019 has our needs, and is the fastest.
@@ -41,7 +37,7 @@ jobs:
       run: dotnet restore Elements.Quantity
 
     - name: Build
-      run: dotnet build Elements.Quantity --framework ${{ env.DOTNET_VERSION }} --configuration Release --no-restore
+      run: dotnet build Elements.Quantity --configuration Release --no-restore
 
-    - name: ${{ env.DOTNET_VERSION }} Integration Tests
-      run: dotnet test Testing --framework ${{ env.DOTNET_VERSION }} --configuration Release --no-restore
+    - name: Integration Tests
+      run: dotnet test Testing --configuration Release --no-restore
