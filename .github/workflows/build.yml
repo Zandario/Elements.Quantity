@@ -43,8 +43,6 @@ jobs:
         dotnet build Elements.Quantity --no-restore
 
   testing:
-    # Why test if we don't build?
-    needs: build
     runs-on: windows-2019
 
     # Cancels previous runs if they're still in progress.
