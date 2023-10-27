@@ -27,20 +27,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    # Not needed until/if we use NuGet packages.
-    # - name: Install dependencies
-    #   run: |
-    #     dotnet restore Elements.Quantity
-    #     dotnet restore Testing
 
-    # Not needed until/if we use NuGet packages.
     - name: Install dependencies
-      run: |
-        dotnet restore --no-cache --verbosity normal
+      run: dotnet restore --no-cache --verbosity normal
 
     - name: Build
-      run: |
-        dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --verbosity normal --no-restore
 
     - name: Test
       run: dotnet test Testing --configuration Release --verbosity normal --no-restore
