@@ -34,7 +34,7 @@ jobs:
 
     - name: Build
       run: |
-        dotnet build --configuration Release --no-restore
+        dotnet build Elements.Quantity --configuration Release --no-restore
 
     - name: Test
       run: |
