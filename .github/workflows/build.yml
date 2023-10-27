@@ -32,10 +32,10 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install dependencies
-      run: dotnet restore Elements.Quantity --no-dependencies
+      run: dotnet restore Elements.Quantity
 
     - name: Build
       run: dotnet build Elements.Quantity --no-restore
 
     - name: Test
-      run: dotnet test Testing --no-restore
+      run: dotnet test Testing
