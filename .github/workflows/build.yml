@@ -30,7 +30,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dotnet restore --no-cache --verbosity normal
+        dotnet restore --no-cache --no-dependencies --force --disable-parallel --ignore-failed-sources
 
     - name: Build
       run: |
