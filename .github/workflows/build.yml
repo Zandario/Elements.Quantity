@@ -19,6 +19,8 @@ env:
 
 jobs:
   build:
+    name: Build with Dotnet ${{ matrix.dotnet }}
+
     # 2019 has our needs, and is the fastest.
     runs-on: windows-2019
 
@@ -28,13 +30,17 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
+    strategy:
+      matrix:
+        dotnet: [ '4.6.2', '4.6.x', '4.x' ]
+
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup .NET 4.6.2
+    - name: Setup .NET ${{ matrix.dotnet }}
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 4.6
+        dotnet-version: ${{ matrix.dotnet }}
 
     - name: Install dependencies
       run: dotnet restore Elements.Quantity
