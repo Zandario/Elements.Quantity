@@ -28,10 +28,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     # Not needed until we use NuGet packages.
-    # - name: Install dependencies
-    #   run: |
-    #     dotnet restore Elements.Quantity
-    #     dotnet restore Testing
+    - name: Install dependencies
+      run: |
+        dotnet restore Elements.Quantity
+        dotnet restore Testing
     # It is faster to call dotnet build on the individual projects than to call dotnet build on the root.
     - name: Build
       run: |
