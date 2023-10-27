@@ -19,6 +19,11 @@ jobs:
     # Comes with dotnet.
     runs-on: windows-2019
 
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [Elements.Quantity, Testing]
+
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
@@ -30,12 +35,12 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dotnet restore --no-dependencies
+        dotnet restore ${{ matrix.project }} --no-dependencies
 
     - name: Build
       run: |
-        dotnet build Elements.Quantity --configuration Release --no-restore
+        dotnet build ${{ matrix.project }} --configuration Release --no-restore
 
     - name: Test
       run: |
-        dotnet test Testing --configuration Release --verbosity normal --no-restore
+        dotnet test ${{ matrix.project }} --configuration Release --verbosity normal --no-restore
