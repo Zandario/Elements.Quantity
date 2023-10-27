@@ -15,18 +15,14 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-latest, windows-2022, windows-2019]
     # 2019, has our .NET needs, latest does not
     # Comes with dotnet.
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     # Cancels previous runs if they're still in progress.
     # It's unlikely with how short this workflow is, but it's good to have.
     concurrency:
-      group: ${{ matrix.os }}-${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
